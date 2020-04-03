@@ -15,7 +15,7 @@ class Maplet extends Component {
   }
   /*componentDidMount() {
    async function initMap() {
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn6biiYSbeE_Q1FX8ujW65HS32ItfWVhI&callback=initMap"
+    src="https://maps.googleapis.com/maps/api/js?key=///////key//////////&callback=initMap"
     let map = new google.maps.Map(), {
       zoom: 4,
       center: {lat: -25.344, lng: 131.036}
@@ -36,7 +36,7 @@ class Maplet extends Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDn6biiYSbeE_Q1FX8ujW65HS32ItfWVhI'
+  apiKey: '///////key//////////'
 })(MapContainer);
 
 export default Maplet
