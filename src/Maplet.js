@@ -2,15 +2,26 @@ import React, { Component } from 'react'
 import { Client } from "@googlemaps/google-maps-services-js"
 import './App.css';
 import axiosInstance from 'axios';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 const client = new Client({});
 
-class Maplet extends Component {
+const mapStyles = {
+  width: '100%',
+  height: '100%',
+}
+
+export class Maplet extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      spaces: [
+        {latitude: 44.4759, longitude: -73.2121},
+        {latitude: 44.4750, longitude: -73.2121},
+        {latitude: 44.4748, longitude: -73.2120},
+        {latitude: 44.4751, longitude: -73.2118},
+        {latitude: 44.4754, longitude: -73.2121}
+      ]
     }
   }
   /*componentDidMount() {
@@ -23,22 +34,31 @@ class Maplet extends Component {
    }
 
   }*/
+  
+  displayMarkers = () => {
+    return this.state.spaces.map((space, index) => {
+      return <Marker key={index} id={index} position={{
+       lat: space.latitude,
+       lng: space.longitude
+     }}
+     onClick={() => console.log("You clicked me!")} />
+    })
+  }
+
 
   render() {
     return (
-      <div>
-        <Map google={this.props.google}
-          zoom={8}
+        <Map
+          google={this.props.google}
+          zoom={15}
           style={mapStyles}
-          initialCenter={{ lat: 47.444, lng: -122.176}} />
-      </div >
-    )
+          initialCenter={{ lat: 44.4759, lng: -73.2121}}>
+          
+          {this.displayMarkers()}
+          </Map>
+      )
   }
 }
 export default GoogleApiWrapper({
-  apiKey: '///////key//////////'
-})(MapContainer);
-
-export default Maplet
-
-
+  apiKey: 'AIzaSyAGd5kHcufYAwR55sEjOjpJIuOh0uD5BJM'
+})(Maplet)
