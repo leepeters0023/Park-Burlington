@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Client } from "@googlemaps/google-maps-services-js"
 import './App.css';
-import axiosInstance from 'axios';
+//import axiosInstance from 'axios';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-
 const client = new Client({});
+const dotenv = require('dotenv');
 
 const mapStyles = {
   width: '100%',
@@ -60,5 +60,5 @@ export class Maplet extends Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAGd5kHcufYAwR55sEjOjpJIuOh0uD5BJM'
-})(Maplet)
+  apiKey: process.env.REACT_APP_API_KEY
+})(Maplet);
