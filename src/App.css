@@ -1,7 +1,23 @@
 #map {
   width: 100%;
-height: 400px;
+height: ;
 background-color: grey;
 }
 
+#header {
+  height: 8vh;
+  background-color: #20346a;
+  display: flex;
+  align-items: center;
+}
+
+#logo {
+  height: 66%;
+  margin-left: 1vh;
+}
+
+#logo-text {
+  height: 25%;
+  /* margin-left: .5vh; */
+}
 

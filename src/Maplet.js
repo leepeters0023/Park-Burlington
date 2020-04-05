@@ -6,9 +6,9 @@ import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 const client = new Client({});
 const dotenv = require('dotenv');
 
-const mapStyles = {
+let mapStyles = {
   width: '100%',
-  height: '100%',
+  height: '92vh',
 }
 
 export class Maplet extends Component {
@@ -41,7 +41,7 @@ export class Maplet extends Component {
        lat: space.latitude,
        lng: space.longitude
      }}
-     onClick={() => console.log("You clicked me!")} />
+     onClick={() => console.log("You clicked me!") }  />
     })
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Header from './Header.js'
 import Maplet from './Maplet.js'
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
   render(){
   return (
     <div className="App">
+      <Header/>
       <Maplet  
       />
     </div>
