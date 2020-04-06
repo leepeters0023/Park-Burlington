@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
+import React, { Component } from 'react'
+import './App.css';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+
 
 
 var map = ''
@@ -25,30 +29,50 @@ export default class mapSelection extends Component  {
 
   }
   
+export class Maplet extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      spaces: [
+        { latitude: 44.4759, longitude: -73.2121 },
+        { latitude: 44.4750, longitude: -73.2121 },
+        { latitude: 44.4748, longitude: -73.2120 },
+        { latitude: 44.4751, longitude: -73.2118 },
+        { latitude: 44.4754, longitude: -73.2121 }
+      ]
+    }
+  }
+
+  addJson = () => {
+    Map.data.loadGeoJson(
+      'https://storage.googleapis.com/mapsdevsite/json/google.json');
+  }
+
   displayMarkers = () => {
     return this.state.spaces.map((space, index) => {
       return <Marker key={index} id={index} position={{
-       lat: space.latitude,
-       lng: space.longitude
-     }}
-     onClick={() => console.log("You clicked me!") }  />
+        lat: space.latitude,
+        lng: space.longitude
+      }}
+        onClick={() => console.log("You clicked me!")} />
     })
   }
 
   displayKml = () => {
     
   }
+
   render() {
     return (
-        <Map
-          google={this.props.google}
-          zoom={15}
-          style={mapStyles}
-          initialCenter={{ lat: 44.4759, lng: -73.2121}}>
-          
-          {this.displayMarkers()}
-          </Map>
-      )
+      <Map
+        google={this.props.google}
+        zoom={15}
+        style={mapStyles}
+        initialCenter={{ lat: 44.4759, lng: -73.2121 }}>
+        {this.addJson()}
+        {this.displayMarkers()}
+      </Map>
+    )
   }
 }
 export default GoogleApiWrapper({
