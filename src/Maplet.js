@@ -60,5 +60,5 @@ export class Maplet extends Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAGd5kHcufYAwR55sEjOjpJIuOh0uD5BJM'
+  apiKey: ''
 })(Maplet)
