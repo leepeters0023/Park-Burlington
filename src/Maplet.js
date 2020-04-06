@@ -50,7 +50,7 @@ export class Maplet extends Component {
     return (
         <Map
           google={this.props.google}
-          zoom={15}
+          zoom={13}
           style={mapStyles}
           initialCenter={{ lat: 44.4759, lng: -73.2121}}>
           
