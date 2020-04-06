@@ -23,9 +23,9 @@ export default class mapSelection extends Component  {
     }
     dataHandler = (getJson) => {
         // FIRST I REMOVE THE CURRENT LAYER (IF THERE IS ONE)
-        for (var i = 0; i < dataLayer.length; i++) {
-            map.data.remove(dataLayer[i])
-        }
+        // for (var i = 0; i < dataLayer.length; i++) {
+        //     // map.data.remove(dataLayer[i])
+        // }
         // THEN I FETCH MY JSON FILE, IN HERE I'M USING A PROP BECAUSE 
         // I WANT TO USE THIS DATAHANDLER MULTIPLE TIMES & DYNAMICALLY 
         // I CAN NOW DO SOMETHING LIKE THIS: 
@@ -36,7 +36,13 @@ export default class mapSelection extends Component  {
             .then(featureCollection => {
                 dataLayer = map.data.addGeoJson(featureCollection)
                 // ADD SOME NEW STYLE IF YOU WANT TO
-                // map.data.setStyle({strokeWeight: 0.5, fillOpacity: 0 });
+                // map.data.setStyle({fillColor: "#7cb342", fillOpacity: 1});
+                console.log(featureCollection)
+                // map.data.getStyle()
+                featureCollection.features.forEach(feature => {
+                  map.data.addGeoJson(feature)
+                  console.log(feature)
+                });
             }
             );
         map.data.addListener('mouseover', (event) => {
@@ -44,7 +50,7 @@ export default class mapSelection extends Component  {
             // ADD A STYLE WHEN YOU HOVER OVER A SPECIFIC POLYGON
                
             // IN CONSOLE LOG, YOU CAN SEE ALL THE DATA YOU CAN RETURN
-            console.log(event.feature)
+            // console.log(event.feature)
         });
         map.data.addListener('mouseout', (event) => {
             // REVERT THE STYLE TO HOW IT WAS WHEN YOU HOVER OUT
