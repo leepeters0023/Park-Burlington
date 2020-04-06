@@ -4,7 +4,6 @@ import './App.css';
 //import axiosInstance from 'axios';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 const client = new Client({});
-const dotenv = require('dotenv');
 
 let mapStyles = {
   width: '100%',
@@ -60,5 +59,5 @@ export class Maplet extends Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_API_KEY
+  apiKey: process.env.REACT_APP_API_KEY  // we'll need to revisit this before going live, this method is not secure enough for the web. Will consider restricting by HTTP referer or finding a canonic way 
 })(Maplet);
