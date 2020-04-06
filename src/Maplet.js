@@ -36,11 +36,19 @@ export default class mapSelection extends Component  {
             .then(featureCollection => {
                 dataLayer = map.data.addGeoJson(featureCollection)
                 // ADD SOME NEW STYLE IF YOU WANT TO
-                // map.data.setStyle({fillColor: "#7cb342", fillOpacity: 1});
-                console.log(featureCollection)
+             
+                console.log(featureCollection)                   
                 // map.data.getStyle()
                 featureCollection.features.forEach(feature => {
                   map.data.addGeoJson(feature)
+                  console.log(JSON.stringify(feature.properties.fill))
+                  if (feature.properties.styleHash === "66d4c45c") {
+                    map.data.setStyle({stroke: feature.properties.stroke});
+                  }
+                  
+                  
+                      
+                    
                   console.log(feature)
                 });
             }
