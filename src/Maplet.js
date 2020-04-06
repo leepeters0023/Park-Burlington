@@ -44,7 +44,9 @@ export class Maplet extends Component {
     })
   }
 
-
+  displayKml = () => {
+    
+  }
   render() {
     return (
         <Map
