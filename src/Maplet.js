@@ -25,7 +25,7 @@ export class Maplet extends Component {
   }
   /*componentDidMount() {
    async function initMap() {
-    src="https://maps.googleapis.com/maps/api/js?key=///////key//////////&callback=initMap"
+    src="https://maps.googleapis.com/maps/api/"
     let map = new google.maps.Map(), {
       zoom: 4,
       center: {lat: -25.344, lng: 131.036}
