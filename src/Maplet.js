@@ -23,61 +23,20 @@ export default class mapSelection extends Component  {
                 zoom: 15,
                 gestureHandling: 'greedy',
                 disableDefaultUI: false,
+                
             });
+            map.data.loadGeoJson(MapData)
+            map.data.setStyle(function(feature) {
+              var stroke = feature.getProperty('stroke')
+              var color = feature.getProperty('fill');
+              return {
+                fillColor: color,
+                strokeColor: stroke,
+              };
+          });
     }
-   }
 
-  }
-  
-export class Maplet extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      spaces: [
-        { latitude: 44.4759, longitude: -73.2121 },
-        { latitude: 44.4750, longitude: -73.2121 },
-        { latitude: 44.4748, longitude: -73.2120 },
-        { latitude: 44.4751, longitude: -73.2118 },
-        { latitude: 44.4754, longitude: -73.2121 }
-      ]
-    }
-  }
-
-  addJson = () => {
-    Map.data.loadGeoJson(
-      'https://storage.googleapis.com/mapsdevsite/json/google.json');
-  }
-
-  displayMarkers = () => {
-    return this.state.spaces.map((space, index) => {
-      return <Marker key={index} id={index} position={{
-        lat: space.latitude,
-        lng: space.longitude
-      }}
-        onClick={() => console.log("You clicked me!")} />
-    })
-  }
-
-  displayKml = () => {
-    
-  }
-
-  render() {
-    return (
-      <Map
-        google={this.props.google}
-        zoom={15}
-        style={mapStyles}
-        initialCenter={{ lat: 44.4759, lng: -73.2121 }}>
-        {this.addJson()}
-        {this.displayMarkers()}
-      </Map>
-    )
-  }
-}
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_API_KEY  // we'll need to revisit this before going live, this method is not secure enough for the web. Will consider restricting by HTTP referer or finding a canonic way 
-})(Maplet);
+    //Currently not ever calling this data handler
     dataHandler = (getJson) => {
         // FIRST I REMOVE THE CURRENT LAYER (IF THERE IS ONE)
         // for (var i = 0; i < dataLayer.length; i++) {
@@ -91,15 +50,20 @@ export default GoogleApiWrapper({
         fetch(getJson)
             .then(response => response.json())
             .then(featureCollection => {
-                dataLayer = map.data.addGeoJson(featureCollection)
+                
                 // ADD SOME NEW STYLE IF YOU WANT TO
-                // map.data.setStyle({fillColor: "#7cb342", fillOpacity: 1});
-                console.log(featureCollection)
-                // map.data.getStyle()
-                featureCollection.features.forEach(feature => {
-                  map.data.addGeoJson(feature)
-                  console.log(feature)
-                });
+             
+                // console.log(featureCollection)                   
+                // map.data.setStyle(map.data.getStyle()) 
+                // featureCollection.features.forEach(feature => {
+                //   map.data.addGeoJson(feature)
+                //   console.log(JSON.stringify(feature.properties.fill))
+                //   if (feature.properties.fill) {
+                //     feature.setProperty("fillColor", feature.properties.fill);
+                //   } 
+                    
+                //   console.log(feature)
+                // });
             }
             );
         map.data.addListener('mouseover', (event) => {
@@ -126,7 +90,7 @@ export default GoogleApiWrapper({
           //We cannot access google.maps until it's finished loading
           s.addEventListener('load', e => {
             this.onScriptLoad()
-            this.dataHandler(MapData)
+            // this.dataHandler(MapData)
 
           })
         } else {
