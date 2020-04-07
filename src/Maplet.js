@@ -19,8 +19,20 @@ export default class mapSelection extends Component  {
                 zoom: 15,
                 gestureHandling: 'greedy',
                 disableDefaultUI: false,
+                
             });
+            map.data.loadGeoJson(MapData)
+            map.data.setStyle(function(feature) {
+              var stroke = feature.getProperty('stroke')
+              var color = feature.getProperty('fill');
+              return {
+                fillColor: color,
+                strokeColor: stroke,
+              };
+          });
     }
+
+    //Currently not ever calling this data handler
     dataHandler = (getJson) => {
         // FIRST I REMOVE THE CURRENT LAYER (IF THERE IS ONE)
         // for (var i = 0; i < dataLayer.length; i++) {
@@ -34,15 +46,20 @@ export default class mapSelection extends Component  {
         fetch(getJson)
             .then(response => response.json())
             .then(featureCollection => {
-                dataLayer = map.data.addGeoJson(featureCollection)
+                
                 // ADD SOME NEW STYLE IF YOU WANT TO
-                // map.data.setStyle({fillColor: "#7cb342", fillOpacity: 1});
-                console.log(featureCollection)
-                // map.data.getStyle()
-                featureCollection.features.forEach(feature => {
-                  map.data.addGeoJson(feature)
-                  console.log(feature)
-                });
+             
+                // console.log(featureCollection)                   
+                // map.data.setStyle(map.data.getStyle()) 
+                // featureCollection.features.forEach(feature => {
+                //   map.data.addGeoJson(feature)
+                //   console.log(JSON.stringify(feature.properties.fill))
+                //   if (feature.properties.fill) {
+                //     feature.setProperty("fillColor", feature.properties.fill);
+                //   } 
+                    
+                //   console.log(feature)
+                // });
             }
             );
         map.data.addListener('mouseover', (event) => {
@@ -69,7 +86,7 @@ export default class mapSelection extends Component  {
           //We cannot access google.maps until it's finished loading
           s.addEventListener('load', e => {
             this.onScriptLoad()
-            this.dataHandler(MapData)
+            // this.dataHandler(MapData)
 
           })
         } else {
