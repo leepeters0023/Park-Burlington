@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
-import React, { Component } from 'react'
 import './App.css';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-
-
 
 var map = ''
 var dataLayer = ''
@@ -23,7 +19,60 @@ export default class mapSelection extends Component  {
                 zoom: 15,
                 gestureHandling: 'greedy',
                 disableDefaultUI: false,
-                
+                styles: [
+                  {
+                    featureType: "administrative",
+                    elementType: "geometry",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "poi",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "road",
+                    elementType: "labels.icon",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "road.arterial",
+                    elementType: "geometry.fill",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "transit",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "transit.station.bus",
+                    elementType: "labels.icon",
+                    stylers: [
+                      {
+                        visibility: "on"
+                      }
+                    ]
+                  }
+                ]
             });
             map.data.loadGeoJson(MapData)
             map.data.setStyle(function(feature) {
