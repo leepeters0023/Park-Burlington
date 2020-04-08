@@ -23,8 +23,8 @@ export default class mapSelection extends Component  {
             });
             map.data.loadGeoJson(MapData)
             map.data.setStyle(function(feature) {
-              var stroke = feature.getProperty('stroke')
-              var color = feature.getProperty('fill');
+              let stroke = feature.getProperty('stroke')
+              let color = feature.getProperty('fill');
               return {
                 fillColor: color,
                 strokeColor: stroke,
