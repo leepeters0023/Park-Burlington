@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
 import './App.css';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-
-
 
 var map = ''
 var dataLayer = ''
