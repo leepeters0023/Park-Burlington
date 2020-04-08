@@ -54,7 +54,7 @@ export default class mapSelection extends Component  {
                  
                 featureCollection.features.forEach(feature => {
                     
-                    
+                    let coords = feature.geometry.coordinates
                     // map.data.add(polygon)
                         console.log(feature)
                     let i = feature.geometry.type
