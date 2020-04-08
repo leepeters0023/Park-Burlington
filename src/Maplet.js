@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
+import google from 'react-google-maps'
 
 
 var map = ''
@@ -25,12 +26,16 @@ export default class mapSelection extends Component  {
             map.data.setStyle(function(feature) {
               var stroke = feature.getProperty('stroke')
               var color = feature.getProperty('fill');
+              
               return {
                 fillColor: color,
                 strokeColor: stroke,
               };
-          });
-    }
+            }); 
+
+        
+
+    };
 
     //Currently not ever calling this data handler
     dataHandler = (getJson) => {
@@ -46,6 +51,27 @@ export default class mapSelection extends Component  {
         fetch(getJson)
             .then(response => response.json())
             .then(featureCollection => {
+                 
+                featureCollection.features.forEach(feature => {
+                    
+                    
+                    // map.data.add(polygon)
+                        console.log(feature)
+                    let i = feature.geometry.type
+                    if(i === 'polygon'){
+                        map.data.addListener('click', (event) => {
+                            console.log(feature.properties.name)
+                            console.log(feature.properties.description)
+                        })
+                      
+                    }else if(i === 'LineString'){
+                        map.data.addListener('click', (event) => {
+                            console.log(feature.properties.name)
+                            console.log(feature.properties.description)
+                        })
+                    }
+                })
+
                 
                 // ADD SOME NEW STYLE IF YOU WANT TO
              
@@ -86,9 +112,11 @@ export default class mapSelection extends Component  {
           //We cannot access google.maps until it's finished loading
           s.addEventListener('load', e => {
             this.onScriptLoad()
-            // this.dataHandler(MapData)
+        this.dataHandler(MapData)
 
           })
+
+         
         } else {
           this.onScriptLoad()
         }
