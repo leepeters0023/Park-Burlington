@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
-import React, { Component } from 'react'
 import './App.css';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+// import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 
 
@@ -19,19 +18,27 @@ export default class mapSelection extends Component  {
           document.getElementById('map'),
            {
                 // ADD OPTIONS LIKE STYLE, CENTER, GESTUREHANDLING, ...
-                center: { lat: 44.4759, lng: -73.2121 },
-                zoom: 15,
+                center: { lat: 44.478081, lng: -73.215739 },
+                zoom: 16,
                 gestureHandling: 'greedy',
                 disableDefaultUI: false,
                 
             });
             map.data.loadGeoJson(MapData)
             map.data.setStyle(function(feature) {
-              let stroke = feature.getProperty('stroke')
-              let color = feature.getProperty('fill');
+              let fillC = feature.getProperty('fill');
+              let fillO = feature.getProperty('fill-opacity')
+              let strokeC = feature.getProperty('stroke')
+              let strokeO = feature.getProperty('stroke-opacity')
+              let strokeW = feature.getProperty('stroke-width')
+              
               return {
-                fillColor: color,
-                strokeColor: stroke,
+                fillColor: fillC,
+                fillOpacity:  fillO,
+                strokeColor: strokeC,
+                strokeOpacity: strokeO,
+                strokeWeight: strokeW,
+                zIndex: -10000
               };
           });
     }
