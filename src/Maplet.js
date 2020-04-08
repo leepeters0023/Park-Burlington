@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
-import google from 'react-google-maps'
-
 
 var map = ''
 var dataLayer = ''
@@ -20,21 +18,73 @@ export default class mapSelection extends Component  {
                 zoom: 15,
                 gestureHandling: 'greedy',
                 disableDefaultUI: false,
-                
+                styles: [
+                  {
+                    featureType: "administrative",
+                    elementType: "geometry",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "poi",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "road",
+                    elementType: "labels.icon",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "road.arterial",
+                    elementType: "geometry.fill",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "transit",
+                    stylers: [
+                      {
+                        visibility: "off"
+                      }
+                    ]
+                  },
+                  {
+                    featureType: "transit.station.bus",
+                    elementType: "labels.icon",
+                    stylers: [
+                      {
+                        visibility: "on"
+                      }
+                    ]
+                  }
+                ]
             });
             map.data.loadGeoJson(MapData)
             map.data.setStyle(function(feature) {
               var stroke = feature.getProperty('stroke')
               var color = feature.getProperty('fill');
-              
               return {
                 fillColor: color,
                 strokeColor: stroke,
               };
-            }); 
-
-        
-
+          });
+          
+          
+          
     };
 
     //Currently not ever calling this data handler
@@ -55,8 +105,9 @@ export default class mapSelection extends Component  {
                 featureCollection.features.forEach(feature => {
                     
                     let coords = feature.geometry.coordinates
-                    // map.data.add(polygon)
-                        console.log(feature)
+                    console.log(coords)
+                    
+                    console.log(feature)
                     let i = feature.geometry.type
                     if(i === 'polygon'){
                         map.data.addListener('click', (event) => {
@@ -125,7 +176,10 @@ export default class mapSelection extends Component  {
         return (
             <div id='mapContainer'>
                 <div style={{ width: '100%', height: '100%' }} id='map' />
-            </div>
+                
+               
+           </div>
+            
         );
     }
 };
