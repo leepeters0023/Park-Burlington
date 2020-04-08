@@ -16,7 +16,7 @@ export default class mapSelection extends Component  {
            {
                 // ADD OPTIONS LIKE STYLE, CENTER, GESTUREHANDLING, ...
                 center: { lat: 44.478081, lng: -73.215739 },
-                zoom: 16,
+                zoom: 15,
                 gestureHandling: 'greedy',
                 disableDefaultUI: false,
                 styles: [
