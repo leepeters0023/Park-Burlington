@@ -19,7 +19,7 @@ export default class mapSelection extends Component  {
                 zoom: 15,
                 gestureHandling: 'greedy',
                 disableDefaultUI: false,
-                style: [
+                styles: [
                   {
                     featureType: "administrative",
                     elementType: "geometry",
