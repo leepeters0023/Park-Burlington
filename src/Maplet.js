@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
 import './App.css';
 
+
 var map = ''
 var dataLayer = ''
 export default class mapSelection extends Component  {
@@ -91,6 +92,9 @@ export default class mapSelection extends Component  {
                 zIndex: -10000
               };
           });
+          var input = document.getElementById('pac-input');
+        // var searchBox = new window.google.maps.places.SearchBox(input);
+        // map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
     }
 
     //Currently not ever calling this data handler
