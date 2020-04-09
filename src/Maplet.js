@@ -2,155 +2,190 @@ import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
 import './App.css';
 
-var map = ''
-var dataLayer = ''
-export default class mapSelection extends Component  {
-    constructor(props){
-        super(props)
-        this.onScriptLoad = this.onScriptLoad.bind(this)
+let map = ''
+let dataLayer = ''
+export default class mapSelection extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      modalDisplay: false,
+      lotName: ''
     }
-    onScriptLoad() {
-        // CREATE YOUR GOOGLE MAPS
-        map = new window.google.maps.Map(
-          document.getElementById('map'),
-           {
-                // ADD OPTIONS LIKE STYLE, CENTER, GESTUREHANDLING, ...
-                center: { lat: 44.4759, lng: -73.2121 },
-                zoom: 15,
-                gestureHandling: 'greedy',
-                disableDefaultUI: false,
-                styles: [
-                  {
-                    featureType: "administrative",
-                    elementType: "geometry",
-                    stylers: [
-                      {
-                        visibility: "off"
-                      }
-                    ]
-                  },
-                  {
-                    featureType: "poi",
-                    stylers: [
-                      {
-                        visibility: "off"
-                      }
-                    ]
-                  },
-                  {
-                    featureType: "road",
-                    elementType: "labels.icon",
-                    stylers: [
-                      {
-                        visibility: "off"
-                      }
-                    ]
-                  },
-                  {
-                    featureType: "road.arterial",
-                    elementType: "geometry.fill",
-                    stylers: [
-                      {
-                        visibility: "off"
-                      }
-                    ]
-                  },
-                  {
-                    featureType: "transit",
-                    stylers: [
-                      {
-                        visibility: "off"
-                      }
-                    ]
-                  },
-                  {
-                    featureType: "transit.station.bus",
-                    elementType: "labels.icon",
-                    stylers: [
-                      {
-                        visibility: "on"
-                      }
-                    ]
-                  }
-                ]
-            });
-            map.data.loadGeoJson(MapData)
-            map.data.setStyle(function(feature) {
-              var stroke = feature.getProperty('stroke')
-              var color = feature.getProperty('fill');
-              return {
-                fillColor: color,
-                strokeColor: stroke,
-              };
-          });
-    }
+    this.onScriptLoad = this.onScriptLoad.bind(this)
+  }
+  onScriptLoad() {
+    // - - - - Google map functionality only - - - - //
+    map = new window.google.maps.Map(
+      document.getElementById('map'),
+      {
+        // ADD OPTIONS LIKE STYLE, CENTER, GESTUREHANDLING, ...
+        center: { lat: 44.4759, lng: -73.2121 },
+        zoom: 15,
+        gestureHandling: 'greedy',
+        disableDefaultUI: false,
+        styles: [
+          {
+            featureType: "administrative",
+            elementType: "geometry",
+            stylers: [
+              {
+                visibility: "off"
+              }
+            ]
+          },
+          {
+            featureType: "poi",
+            stylers: [
+              {
+                visibility: "off"
+              }
+            ]
+          },
+          {
+            featureType: "road",
+            elementType: "labels.icon",
+            stylers: [
+              {
+                visibility: "off"
+              }
+            ]
+          },
+          {
+            featureType: "road.arterial",
+            elementType: "geometry.fill",
+            stylers: [
+              {
+                visibility: "off"
+              }
+            ]
+          },
+          {
+            featureType: "transit",
+            stylers: [
+              {
+                visibility: "off"
+              }
+            ]
+          },
+          {
+            featureType: "transit.station.bus",
+            elementType: "labels.icon",
+            stylers: [
+              {
+                visibility: "on"
+              }
+            ]
+          }
+        ]
+      });
+    map.data.loadGeoJson(MapData)
+    map.data.setStyle(function (feature) {
+      var stroke = feature.getProperty('stroke')
+      var color = feature.getProperty('fill');
+      return {
+        fillColor: color,
+        strokeColor: stroke,
+      };
+    });
+// - - - - - geometry event listener and modal functions 
+    map.data.addListener('click', (event) => {
+      this.setState({
+        modalDisplay: true,
+        lotName: event.feature.j.name
+      })
+      console.log('clicked')
+      console.log(event.feature)
+      console.log(event.feature.j.name)
+    })
+  }
 
-    //Currently not ever calling this data handler
-    dataHandler = (getJson) => {
-        // FIRST I REMOVE THE CURRENT LAYER (IF THERE IS ONE)
-        // for (var i = 0; i < dataLayer.length; i++) {
-        //     // map.data.remove(dataLayer[i])
-        // }
-        // THEN I FETCH MY JSON FILE, IN HERE I'M USING A PROP BECAUSE 
-        // I WANT TO USE THIS DATAHANDLER MULTIPLE TIMES & DYNAMICALLY 
-        // I CAN NOW DO SOMETHING LIKE THIS: 
-        // onClick(this.dataHandler(www.anotherlinktojsonfile.com/yourjsonfile.json))
-        // ON EACH BUTTON AND CHOOSE WHICH JSON FILE NEEDS TO BE FETCHED IN MY DATAHANDLER.
-        fetch(getJson)
-            .then(response => response.json())
-            .then(featureCollection => {
-                
-                // ADD SOME NEW STYLE IF YOU WANT TO
-             
-                // console.log(featureCollection)                   
-                // map.data.setStyle(map.data.getStyle()) 
-                // featureCollection.features.forEach(feature => {
-                //   map.data.addGeoJson(feature)
-                //   console.log(JSON.stringify(feature.properties.fill))
-                //   if (feature.properties.fill) {
-                //     feature.setProperty("fillColor", feature.properties.fill);
-                //   } 
-                    
-                //   console.log(feature)
-                // });
-            }
-            );
-        map.data.addListener('mouseover', (event) => {
-            map.data.revertStyle();
-            // ADD A STYLE WHEN YOU HOVER OVER A SPECIFIC POLYGON
-               
-            // IN CONSOLE LOG, YOU CAN SEE ALL THE DATA YOU CAN RETURN
-            // console.log(event.feature)
-        });
-        map.data.addListener('mouseout', (event) => {
-            // REVERT THE STYLE TO HOW IT WAS WHEN YOU HOVER OUT
-            map.data.revertStyle();
-        });
-    }
-    componentDidMount() {
-        // LOADING THE GOOGLE MAPS ITSELF
-        if (!window.google) {
-          var s = document.createElement('script');
-          s.type = 'text/javascript';
-          s.src = 'https://maps.google.com/maps/api/js?key=' + process.env.REACT_APP_API_KEY;
-          var x = document.getElementsByTagName('script')[0];
-          x.parentNode.insertBefore(s, x);
-          // Below is important. 
-          //We cannot access google.maps until it's finished loading
-          s.addEventListener('load', e => {
-            this.onScriptLoad()
-            // this.dataHandler(MapData)
+  closeModal = (event) => {
+    this.setState({
+      modalDisplay: false,
+    });
+  }
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-          })
-        } else {
-          this.onScriptLoad()
-        }
+  //Currently not ever calling this data handler
+  dataHandler = (getJson) => {
+    // FIRST I REMOVE THE CURRENT LAYER (IF THERE IS ONE)
+    // for (var i = 0; i < dataLayer.length; i++) {
+    //     // map.data.remove(dataLayer[i])
+    // }
+    // THEN I FETCH MY JSON FILE, IN HERE I'M USING A PROP BECAUSE 
+    // I WANT TO USE THIS DATAHANDLER MULTIPLE TIMES & DYNAMICALLY 
+    // I CAN NOW DO SOMETHING LIKE THIS: 
+    // onClick(this.dataHandler(www.anotherlinktojsonfile.com/yourjsonfile.json))
+    // ON EACH BUTTON AND CHOOSE WHICH JSON FILE NEEDS TO BE FETCHED IN MY DATAHANDLER.
+    fetch(getJson)
+      .then(response => response.json())
+      .then(featureCollection => {
+
+        // ADD SOME NEW STYLE IF YOU WANT TO
+
+        // console.log(featureCollection)                   
+        // map.data.setStyle(map.data.getStyle()) 
+        // featureCollection.features.forEach(feature => {
+        //   map.data.addGeoJson(feature)
+        //   console.log(JSON.stringify(feature.properties.fill))
+        //   if (feature.properties.fill) {
+        //     feature.setProperty("fillColor", feature.properties.fill);
+        //   } 
+
+        //   console.log(feature)
+        // });
+      }
+      );
+    map.data.addListener('mouseover', (event) => {
+      map.data.revertStyle();
+      // ADD A STYLE WHEN YOU HOVER OVER A SPECIFIC POLYGON
+
+      // IN CONSOLE LOG, YOU CAN SEE ALL THE DATA YOU CAN RETURN
+      // console.log(event.feature)
+    });
+    map.data.addListener('mouseout', (event) => {
+      // REVERT THE STYLE TO HOW IT WAS WHEN YOU HOVER OUT
+      map.data.revertStyle();
+    });
+  }
+  componentDidMount() {
+    // LOADING THE GOOGLE MAPS ITSELF
+    if (!window.google) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = 'https://maps.google.com/maps/api/js?key=' + process.env.REACT_APP_API_KEY;
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+      // Below is important. 
+      //We cannot access google.maps until it's finished loading
+      s.addEventListener('load', e => {
+        this.onScriptLoad()
+        // this.dataHandler(MapData)
+
+      })
+    } else {
+      this.onScriptLoad()
     }
-    render () {
-        return (
-            <div id='mapContainer'>
-                <div style={{ width: '100%', height: '100%' }} id='map' />
-            </div>
-        );
-    }
+  }
+  render() {
+    return (
+      <div>
+        <div id='mapContainer'>
+          <div style={{ width: '100%', height: '100%' }} id='map' />
+        </div>
+        {this.state.modalDisplay ? <Modal closeModal={this.closeModal} lotName={this.state.lotName} /> : null}
+      </div>
+    );
+  }
 };
+
+function Modal(props) {
+  return (
+    <div id='modal-container'>
+      <div id='modal-content'>
+        <h2>{props.lotName}</h2>
+      </div>
+      <button id='close-modal-button' className='button' onClick={props.closeModal}>Close</button>
+    </div>
+  )
+}

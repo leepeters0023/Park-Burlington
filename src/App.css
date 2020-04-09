@@ -1,7 +1,7 @@
 #map {
   width: 100%;
-height: ;
-background-color: grey;
+  height: ;
+  background-color: grey;
 }
 
 #header {
@@ -24,5 +24,60 @@ background-color: grey;
 #mapContainer {
   height: 92vh;
 }
+/* - - - modal styles - - - */
+#modal-container {
+  display: flex;
+  background-color: black;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  opacity: 0.85;
+  position: fixed;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#close-modal-button{
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    z-index: 3;
+    width: 25vw;
+    margin-top: 15px;
+    border-radius: 20px;
+    border: solid white 1px;
+    line-height: 60px;
+    font-weight: 200;
+    font-family: Helvetica;
+    font-size: 20px;
+    color: white;
+  }
+#modal-content {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+h2 {
+    font-size: 40px;
+    text-align: center;
+    color: white;
+    font-family: Helvetica, sans-sarif;
+}
 
-
+/* - - ^ modal styles ^ - - */
+.button {
+  background-color: transparent;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+}
+.button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: hotpink;
+  opacity: 0.85;
+}
