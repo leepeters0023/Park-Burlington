@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, isValidElement } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
 import ClearMapData from './ClearParkingMap.geojson'
 import './App.css';
 
 var map = ''
-var dataLayer = ''
+// var dataLayer = ''
+
 export default class mapSelection extends Component {
   constructor(props) {
     super(props)
@@ -14,8 +15,7 @@ export default class mapSelection extends Component {
     }
   }
 
-
-  onScriptLoad() {                                      
+    onScriptLoad() {                                      
     // CREATE YOUR GOOGLE MAPS
     map = new window.google.maps.Map(
       document.getElementById('map'),
@@ -86,9 +86,7 @@ export default class mapSelection extends Component {
 
   }
 
-
-
-  componentDidMount() {
+   componentDidMount() {
     // LOADING THE GOOGLE MAPS ITSELF
     if (!window.google) {
       var s = document.createElement('script');
@@ -109,8 +107,12 @@ export default class mapSelection extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.showParking === true) {
 
+   
+    
+
+
+    if (this.props.showParking === true) { 
       map.data.loadGeoJson(MapData)
       map.data.setStyle(function (feature) {
         let fillC = feature.getProperty('fill');
@@ -118,7 +120,7 @@ export default class mapSelection extends Component {
         let strokeC = feature.getProperty('stroke')
         let strokeO = feature.getProperty('stroke-opacity')
         let strokeW = feature.getProperty('stroke-width')
-
+  
         return {
           fillColor: fillC,
           fillOpacity: fillO,
@@ -130,11 +132,16 @@ export default class mapSelection extends Component {
       });
       console.log('component just updated and state should be true and it is: ' + this.props.showParking)
 
-    } else {
-      map.data.loadGeoJson(ClearMapData)
-      console.log('component just updated and state should be false and it is: ' + this.props.showParking)
-    }
+  } else {
+    map.data.setStyle({visible: false});
+    console.log('component just updated and state should be false and it is: ' + this.props.showParking)
   }
+}
+
+
+
+
+     
 
   render() {
     return (
