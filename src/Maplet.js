@@ -1,10 +1,9 @@
-import React, { Component, isValidElement } from 'react';
+import React, { Component, } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
-import ClearMapData from './ClearParkingMap.geojson'
+
 import './App.css';
 
 var map = ''
-// var dataLayer = ''
 
 export default class mapSelection extends Component {
   constructor(props) {
