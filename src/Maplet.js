@@ -9,7 +9,8 @@ export default class mapSelection extends Component {
     super(props)
     this.state = {
       modalDisplay: false,
-      lotName: ''
+      lotName: '',
+      lotDesc: ''
     }
     this.onScriptLoad = this.onScriptLoad.bind(this)
   }
@@ -91,19 +92,25 @@ export default class mapSelection extends Component {
     map.data.addListener('click', (event) => {
       this.setState({
         modalDisplay: true,
-        lotName: event.feature.j.name
+        lotName: event.feature.j.name,
+        lotDesc: txtTwo // this is  
       })
+      let desc = event.feature.j.description
+      let txtOne = desc.slice(desc.indexOf('<br><br>')+8)
+      let txtTwo = txtOne.slice(0, txtOne.indexOf('<br><br>'))
+      return txtTwo
+      console.log(txtTwo)
       console.log('clicked')
       console.log(event.feature)
       console.log(event.feature.j.name)
     })
   }
-
   closeModal = (event) => {
     this.setState({
       modalDisplay: false,
     });
   }
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   //Currently not ever calling this data handler

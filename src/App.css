@@ -78,6 +78,6 @@ h2 {
 .button:hover {
   cursor: pointer;
   color: white;
-  background-color: hotpink;
+  background-color:#6ec9e0;
   opacity: 0.85;
 }
