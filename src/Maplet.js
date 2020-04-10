@@ -1,10 +1,9 @@
-import React, { Component, isValidElement } from 'react';
+import React, { Component } from 'react';
 import MapData from './BurlingtonParkingMap.geojson'
-import ClearMapData from './ClearParkingMap.geojson'
 import './App.css';
 
-var map = ''
-// var dataLayer = ''
+let map = ''
+
 
 export default class mapSelection extends Component {
   constructor(props) {
@@ -15,7 +14,7 @@ export default class mapSelection extends Component {
     }
   }
 
-    onScriptLoad() {                                      
+  onScriptLoad() {
     // CREATE YOUR GOOGLE MAPS
     map = new window.google.maps.Map(
       document.getElementById('map'),
@@ -80,13 +79,11 @@ export default class mapSelection extends Component {
           }
         ]
 
-      });
-
-
-
+      }
+    );
   }
 
-   componentDidMount() {
+  componentDidMount() {
     // LOADING THE GOOGLE MAPS ITSELF
     if (!window.google) {
       var s = document.createElement('script');
@@ -107,41 +104,38 @@ export default class mapSelection extends Component {
   }
 
   componentDidUpdate() {
+    map.data.loadGeoJson(MapData)
+    map.data.setStyle(function (feature) {
+      let fillC = feature.getProperty('fill');
+      let fillO = feature.getProperty('fill-opacity')
+      let strokeC = feature.getProperty('stroke')
+      let strokeO = feature.getProperty('stroke-opacity')
+      let strokeW = feature.getProperty('stroke-width')
+      return {
+        fillColor: fillC,
+        fillOpacity: fillO,
+        strokeColor: strokeC,
+        strokeOpacity: strokeO,
+        strokeWeight: strokeW,
+        zIndex: -10000
+      };
+    });
 
-   
-    
+    if (this.props.showParking === false) {
+    //   console.log('component just updated and state should be true and it is: ' + this.props.showParking)
+    // } else {
+      map.data.setStyle({ visible: false });
+      console.log('component just updated and state should be false and it is: ' + this.props.showParking)
+    }
 
 
-    if (this.props.showParking === true) { 
-      map.data.loadGeoJson(MapData)
-      map.data.setStyle(function (feature) {
-        let fillC = feature.getProperty('fill');
-        let fillO = feature.getProperty('fill-opacity')
-        let strokeC = feature.getProperty('stroke')
-        let strokeO = feature.getProperty('stroke-opacity')
-        let strokeW = feature.getProperty('stroke-width')
-  
-        return {
-          fillColor: fillC,
-          fillOpacity: fillO,
-          strokeColor: strokeC,
-          strokeOpacity: strokeO,
-          strokeWeight: strokeW,
-          zIndex: -10000
-        };
-      });
-      console.log('component just updated and state should be true and it is: ' + this.props.showParking)
 
-  } else {
-    map.data.setStyle({visible: false});
-    console.log('component just updated and state should be false and it is: ' + this.props.showParking)
   }
-}
 
 
 
 
-     
+
 
   render() {
     return (
