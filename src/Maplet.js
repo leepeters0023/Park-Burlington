@@ -18,6 +18,7 @@ export default class mapSelection extends Component {
     // CREATE YOUR GOOGLE MAPS
     map = new window.google.maps.Map(
       document.getElementById('map'),
+
       {
         // ADD OPTIONS LIKE STYLE, CENTER, GESTUREHANDLING, ...
         center: { lat: 44.478081, lng: -73.215 },
@@ -81,6 +82,22 @@ export default class mapSelection extends Component {
 
       }
     );
+    map.data.loadGeoJson(MapData)
+    map.data.setStyle(function (feature) {
+      let fillC = feature.getProperty('fill');
+      let fillO = feature.getProperty('fill-opacity')
+      let strokeC = feature.getProperty('stroke')
+      let strokeO = feature.getProperty('stroke-opacity')
+      let strokeW = feature.getProperty('stroke-width')
+      return {
+        fillColor: fillC,
+        fillOpacity: fillO,
+        strokeColor: strokeC,
+        strokeOpacity: strokeO,
+        strokeWeight: strokeW,
+        zIndex: -10000
+      };
+    });
   }
 
   componentDidMount() {
@@ -97,10 +114,12 @@ export default class mapSelection extends Component {
         this.onScriptLoad()
       })
 
+      console.log('map did mount and state is : ' + this.state.showParking)
     } else {
       this.onScriptLoad()
+
     }
-    console.log('map did mount and state is : ' + this.state.showParking)
+
   }
 
   componentDidUpdate() {
@@ -119,11 +138,10 @@ export default class mapSelection extends Component {
         strokeWeight: strokeW,
         zIndex: -10000
       };
+      
     });
 
     if (this.props.showParking === false) {
-    //   console.log('component just updated and state should be true and it is: ' + this.props.showParking)
-    // } else {
       map.data.setStyle({ visible: false });
       console.log('component just updated and state should be false and it is: ' + this.props.showParking)
     }

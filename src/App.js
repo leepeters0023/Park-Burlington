@@ -16,7 +16,7 @@ class App extends React.Component {
         { latitude: 44.4754, longitude: -73.2121 }
       ],
 
-      showParking: false
+      showParking: true
     };
   }
 
