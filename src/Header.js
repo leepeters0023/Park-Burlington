@@ -20,9 +20,9 @@ export class Header extends React.Component {
                 <img id="logo" src="logo-secondary.png" alt={'no logo'}></img>
                 <img id="logo-text" src="logo-text.png" alt={'no logo text'}></img>
 
-               
-                <button onClick={this.props.togglePolygonDisplay} >Off-Street</button>
-                <button onClick={this.props.toggleLineStringDisplay} >On-Street</button>
+                {/* <div id='toggleSelector'> */}
+                <button onClick={this.props.toggleParkingDisplay} >Show / Hide Parking</button>
+                {/* </div> */}
             </div>
         )
     }
