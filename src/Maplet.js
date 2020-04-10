@@ -138,31 +138,74 @@ export default class mapSelection extends Component {
         strokeWeight: strokeW,
         zIndex: -10000
       };
-      
+
     });
 
-    if (this.props.showParking === false) {
-      map.data.setStyle({ visible: false });
-      console.log('component just updated and state should be false and it is: ' + this.props.showParking)
+    map.data.forEach(feature => {
+      if (this.props.showParking === false) {
+        let polyShape = feature.getProperty(('geometry.type') === 'Polygon')
+
+        // map.data.addGeoJson(feature)
+        // console.log(JSON.stringify(feature.properties.fill))
+        // if (feature === (geometry) Polygon) {
+        feature.setStyle({ visible: false });
+
+        return { polyShape }
+        }
+        console.log(polyShape)
+        console.log('component just updated: and state should be false and it is: ' + this.props.showParking)
+    });
+  };
+
+  console.log(polyShape)
+        console.log('component just updated: and state should be false and it is: ' + this.props.showParking)
+    render() {
+      return (
+        <div id='mapContainer'>
+          <div style={{ width: '100%', height: '100%' }} id='map' />
+        </div>
+      );
     }
 
+  };
+
+  //this works across the entire datalayer
+  // if (this.props.showParking === false) {
+  //   map.data.setStyle({ visible: false });
+  //   console.log('component just updated: and state should be false and it is: ' + this.props.showParking)
+  // }
 
 
-  }
+  // this is an early forEach attempt and does not work
+  // if (this.props.showParking === false) {
+  //   map.data.setStyle(
+  //   forEach(element => {
+
+  //   }));
+  //   }
+
+  // this attempts to isoloate the itme sd does not work
+  //   map.data.setStyle(array.forEach(polygon => {
+  //     let poly = geometry.getProperty('type', Polygon) 
+  //    return {
+  //     Polygon({ visible: false })
+  //    };
+  //    }
 
 
+  // };
 
 
+  // map.data.addListener('mouseover', (event) => {
+  //   map.data.revertStyle();
 
+    // ADD A STYLE WHEN YOU HOVER OVER A SPECIFIC POLYGON
 
-  render() {
-    return (
-      <div id='mapContainer'>
-        <div style={{ width: '100%', height: '100%' }} id='map' />
-      </div>
-    );
-  }
-
-};
-
-
+    // IN CONSOLE LOG, YOU CAN SEE ALL THE DATA YOU CAN RETURN
+    // console.log(event.feature)
+//   });
+// map.data.addListener('mouseout', (event) => {
+//   // REVERT THE STYLE TO HOW IT WAS WHEN YOU HOVER OUT
+//   map.data.revertStyle();
+// });
+//       }
