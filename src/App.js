@@ -15,28 +15,49 @@ class App extends React.Component {
         { latitude: 44.4751, longitude: -73.2118 },
         { latitude: 44.4754, longitude: -73.2121 }
       ],
-
-      showParking: false
+      showPolygon: false,
+      showLineString: false
     };
   }
 
-  toggleParkingDisplay = () => {
-    if (this.state.showParking === true) {
+  togglePolygonDisplay = () => {
+    if (this.state.showPolygon === true) {
       this.setState({
-        showParking: false
+        showPolygon: false
       })
     } else {
       this.setState({
-        showParking: true
+        showPolygon: true
       })
     }
   };
 
+  toggleLineStringDisplay = () => {
+    if (this.state.showLineString === true) {
+      this.setState({
+        showLineString: false
+      })
+    } else {
+      this.setState({
+        showLineString: true
+      })
+    }
+  };
+
+
+
+
   render() {
     return (
       <div className="App"  >
-        <Header toggleParkingDisplay={this.toggleParkingDisplay} />
-        <Maplet showParking={this.state.showParking} />
+        <Header
+          togglePolygonDisplay={this.togglePolygonDisplay}
+          toggleLineStringDisplay={this.toggleLineStringDisplay}
+        />
+        <Maplet
+          showPolygon={this.state.showPolygon}
+          showLineString={this.state.showLineString}
+        />
       </div>
     );
   }
