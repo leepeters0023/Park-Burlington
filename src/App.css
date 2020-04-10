@@ -67,6 +67,19 @@ h2 {
     color: white;
     font-family: Helvetica, sans-sarif;
 }
+h3 {
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  font-family: Helvetica, sans-sarif;
+}
+ol {
+  list-style-type: none;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  font-family: Helvetica, sans-sarif;
+}
 
 /* - - ^ modal styles ^ - - */
 .button {
